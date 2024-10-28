@@ -1,0 +1,246 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <!--Vistas de empleados-->
+    <record model="ir.ui.view" id="empleados.list_empleados">
+      <field name="name">Lista de Empleados</field>
+      <field name="model">empleados.empleados</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre" />
+          <field name="apellido1" />
+          <field name="apellido2" />
+          <field name="estado" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="empleados.form_empleados">
+      <field name="name">Empleados formulario </field>
+      <field name="model">empleados.empleados</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="nombre" />
+              <field name="apellido1" />
+              <field name="apellido2" />
+              <field name="nombre_completo" />
+              <field name="dni" />
+              <field name="edad" />
+              <field name="fechaNacimiento" />
+              <field name="sueldoBrutoAnual" />
+              <field name="fechaInicioContrato" />
+              <field name="fechaFinContrato" />
+              <field name="estado" />
+              <field name="codigoEmpleado" />
+              <field name="imagen" widget="image"  options="{'size': [50,50] }" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="empleados.kanban_empleados">
+      <field name="name">Empleados kanban</field>
+      <field name="model">empleados.empleados</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click card border-0 shadow-sm mb-3">
+                <div
+                  class="oe_kanban_content card-body d-flex justify-content-between align-items-center">
+                  <div class="oe_kanban_left flex-grow-1">
+                    <div class="oe_kanban_primary font-weight-bold h5">
+                      <field name="nombre_completo" />
+                    </div>
+                    <div class="oe_kanban_secondary text-muted mb-2">
+                      <strong>DNI: </strong>
+                      <span class="font-weight-bold">
+                        <field name="dni" />
+                      </span>
+                    </div>
+                    <div class="oe_kanban_tertiary">
+                      <strong>ESTADO: </strong>
+                      <span class="badge px-2 py-1 font-weight-bold"
+                        t-attf-class="{'bg-success text-light': record.estado == 'ACTIVO', 'bg-danger text-light': record.estado == 'BAJA'}">
+                        <field name="estado" />
+                      </span>
+                    </div>
+                  </div>
+                  <div class="oe_kanban_image ml-3">
+                    <img t-att-src="kanban_image('empleados.empleados', record.imagen, record.id)"
+                      class="oe_avatar img-thumbnail rounded-circle"
+                      style="width: 50px; height: 50px;"
+                      alt="Imagen de empleado" />
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+
+    <!-- Vistas de Empresa-->
+    <record model="ir.ui.view" id="empleados.lis_empresas">
+      <field name="name">Lista Empresas</field>
+      <field name="model">empleados.empresas</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cifEmpresa" />
+          <field name="nombreEmpresa" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="empleados.form_empresas">
+      <field name="name">Empresas formulario </field>
+      <field name="model">empleados.empresas</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="cifEmpresa" />
+              <field name="nombreEmpresa" />
+              <field name="nombreCompletoEmpresa" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="empleados.kanban_empresa">
+      <field name="name">Empresa Kanban</field>
+      <field name="model">empleados.empresas</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click card shadow-sm p-3 mb-3 bg-white rounded">
+                <div class="oe_kanban_content" style="display: flex; flex-direction: column;">
+                  <!-- Encabezado con el CIF de la empresa -->
+                  <div class="mb-2">
+                    <span class="fw-bold text-uppercase text-primary">CIF:</span>
+                    <strong><field name="cifEmpresa"></field></strong>
+                  </div>
+
+                  <!-- Nombre de la empresa -->
+                  <div class="mb-2">
+                    <span class="fw-bold text-uppercase text-success">Company Name:</span>
+                    <strong>
+                      <field name="nombreEmpresa"></field>
+                    </strong>
+                  </div>
+
+                  <!-- Nombre completo -->
+                  <div class="mb-2">
+                    <span class="fw-bold text-uppercase text-info">Full Name:</span>
+                    <strong>
+                      <field name="nombreCompletoEmpresa"></field>
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+
+    <!-- Vistas de la calculadora-->
+    <record id="view_calculadora_sueldo_tree" model="ir.ui.view">
+      <field name="name">Calculadora </field>
+      <field name="model">empleados.calculadora_sueldo</field>
+      <field name="arch" type="xml">
+        <tree string="Calculadora de Sueldo">
+          <field name="nombreConsultor" string="Consultor" />
+          <field name="sueldoBruto" string="Sueldo Bruto Anual" />
+          <field name="numeroPagas" string="Número de Pagas" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_calculadora_sueldo_form" model="ir.ui.view">
+      <field name="name">Calculadora de Sueldo Form</field>
+      <field name="model">empleados.calculadora_sueldo</field>
+      <field name="arch" type="xml">
+        <form string="Calculadora de Sueldo">
+          <sheet>
+            <group>
+              <field name="nombreConsultor" />
+              <field name="sueldoBruto" />
+              <field name="numeroPagas" />
+              <field name="mensualidadBruta" readonly="1" />
+              <field name="mensualidadNeta" readonly="1" />
+              <field name="irpfPagadoAnual" readonly="1" />
+              <field name="irpfPagadoMes" readonly="1" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <!-- Action Empleados-->
+    <record model="ir.actions.act_window" id="empleados.action_window_empleados">
+      <field name="name">Recursos Humano DAM(Empleados)</field>
+      <field name="res_model">empleados.empleados</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!-- Action Empresas-->
+    <record model="ir.actions.act_window" id="empleados.action_window_empresas">
+      <field name="name">Recursos Humano DAM(Empresas)</field>
+      <field name="res_model">empleados.empresas</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!-- Action Calculadora-->
+    <record model="ir.actions.act_window" id="empleados.action_window_calculadora">
+      <field name="name">Recursos Humano DAM(Calculadora)</field>
+      <field name="res_model">empleados.calculadora_sueldo</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="empleados.action_server">
+      <field name="name">empleados server</field>
+      <field name="model_id" ref="model_empleados_empleados"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+  
+    <menuitem name="Empleados" id="empleados.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="RRHH DAM" id="empleados.menu_1" parent="empleados.menu_root"/>
+    <!-- <menuitem name="Menu 2" id="empleados.menu_2" parent="empleados.menu_root"/>-->
+
+    <!-- actions -->
+
+    <menuitem name="Empleados" id="empleados.menu_1_list" parent="empleados.menu_1"
+              action="empleados.action_window_empleados"/>
+    <menuitem name="Empresas" id="empleados.menu_2_list" parent="empleados.menu_1"
+              action="empleados.action_window_empresas"/>
+    <menuitem name="Calculadora de Sueldo Neto Mensual" id="empleados.menu_3_list" parent="empleados.menu_1" 
+              action="empleados.action_window_calculadora"/>
+
+  </data>
+</odoo>

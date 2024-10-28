@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_empleados_empleados,empleados.empleados,model_empleados_empleados,base.group_user,1,1,1,1
+access_empleados_empresas,empleados.empresas,model_empleados_empresas,base.group_user,1,1,1,1
+access_empleados_calculadora_sueldo,empleados.calculadora_sueldo,model_empleados_calculadora_sueldo,base.group_user,1,1,1,1
